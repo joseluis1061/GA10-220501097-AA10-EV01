@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Técnico - Sistema de Inventario Multi-Tienda</title>
+  <style>
+    /* Estilos base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .header p {
+      font-size: 1.1em;
+      margin: 10px 0;
+      opacity: 0.95;
+    }
+    
+    .header a {
+      color: #f1c40f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .header a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Navigation */
+    nav {
+      background: #2c3e50;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0;
+    }
+    
+    nav li {
+      margin: 0;
+    }
+    
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 15px 20px;
+      transition: background 0.3s;
+      font-size: 0.95em;
+    }
+    
+    nav a:hover {
+      background: #34495e;
+    }
+    
+    /* Content sections */
+    section {
+      padding: 40px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    section:last-of-type {
+      border-bottom: none;
+    }
+    
+    h2 {
+      color: #667eea;
+      font-size: 2em;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    
+    h3 {
+      color: #764ba2;
+      font-size: 1.5em;
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    /* Lists */
+    ul, ol {
+      margin: 15px 0 15px 30px;
+    }
+    
+    li {
+      margin-bottom: 10px;
+    }
+    
+    /* Code blocks */
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 20px 0;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.9em;
+      border-left: 4px solid #667eea;
+    }
+    
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #e74c3c;
+      font-size: 0.9em;
+    }
+    
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: left;
+    }
+    
+    th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    tr:hover {
+      background-color: #e8f4fd;
+    }
+    
+    /* Diagrams */
+    .diagram {
+      background: #e8f4fd;
+      border-left: 5px solid #667eea;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+    }
+    
+    .diagram pre {
+      background: #34495e;
+      color: #ecf0f1;
+      border-left: none;
+    }
+    
+    /* Image blocks */
+    .image-block {
+      text-align: center;
+      margin: 30px 0;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .image-placeholder {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 20px;
+      border-radius: 8px;
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+    
+    /* Highlight boxes */
+    .highlight-box {
+      background: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+    
+    .info-box {
+      background: #d1ecf1;
+      border-left: 5px solid #17a2b8;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+    
+    /* Footer */
+    footer {
+      background: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    
+    footer p {
+      margin: 5px 0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8em;
+      }
+      
+      nav ul {
+        flex-direction: column;
+      }
+      
+      nav a {
+        padding: 12px;
+        border-bottom: 1px solid #34495e;
+      }
+      
+      section {
+        padding: 20px;
+      }
+      
+      h2 {
+        font-size: 1.6em;
+      }
+      
+      table {
+        font-size: 0.8em;
+      }
+      
+      th, td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>📦 Manual Técnico del Sistema de Inventario Multi-Tienda</h1>
+    <p><strong>Versión 1.0.0</strong> | Desarrollado por <strong>Jose Luis Zúñiga</strong></p>
+    <p>Ficha: 2885494 | Instructor: Julián Loaiza</p>
+    <p>Servicio Nacional de Aprendizaje SENA | Centro de la Tecnología de la Manufactura Avanzada</p>
+    <p>Repositorio GitHub: <a href="https://github.com/joseluis1061/GA10-220501097-AA10-EV01.git" target="_blank">github.com/joseluis1061/GA10-220501097-AA10-EV01.git</a></p>
+    <p><em>Este manual describe la arquitectura, instalación, configuración y componentes del sistema empresarial de gestión de inventario para múltiples puntos de venta.</em></p>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#introduccion">Introducción</a></li>
+      <li><a href="#arquitectura">Arquitectura</a></li>
+      <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+      <li><a href="#frameworks">Frameworks</a></li>
+      <li><a href="#casos-uso">Casos de Uso</a></li>
+      <li><a href="#modelo-er">Modelo ER</a></li>
+      <li><a href="#diccionario">Diccionario</a></li>
+      <li><a href="#componentes">Componentes</a></li>
+      <li><a href="#instalacion">Instalación</a></li>
+    </ul>
+  </nav>
+
+  <!-- Introduction -->
+  <section id="introduccion">
+    <h2>📋 Introducción</h2>
+    <p>El <strong>Sistema de Inventario Multi-Tienda</strong> es una aplicación empresarial web diseñada para gestionar operaciones de inventario, productos, proveedores y ventas en múltiples puntos de venta de forma centralizada. El sistema permite controlar en tiempo real el stock de productos, realizar transferencias entre tiendas, generar reportes analíticos y mantener trazabilidad completa de todas las transacciones comerciales.</p>
+    
+    <p>Este manual técnico está dirigido a desarrolladores, administradores de sistemas y personal de TI responsable de la instalación, configuración, mantenimiento y evolución del sistema. El documento describe detalladamente la arquitectura tecnológica, los componentes del sistema, los procedimientos de instalación y las especificaciones de la base de datos.</p>
+    
+    <h3>Objetivos del Sistema</h3>
+    <ul>
+      <li><strong>Centralización:</strong> Gestión unificada de inventario para 5-10 tiendas desde una plataforma única</li>
+      <li><strong>Trazabilidad:</strong> Registro completo de movimientos de inventario con auditoría de usuarios</li>
+      <li><strong>Tiempo Real:</strong> Sincronización instantánea de stock entre todas las ubicaciones</li>
+      <li><strong>Escalabilidad:</strong> Arquitectura preparada para crecimiento de tiendas y volumen de transacciones</li>
+      <li><strong>Reportes:</strong> Análisis de inventario valorizado, rotación de productos y estadísticas por tienda</li>
+    </ul>
+    
+    <h3>Alcance del Manual</h3>
+    <p>Este documento cubre:</p>
+    <ul>
+      <li>Arquitectura del sistema y patrones de diseño utilizados</li>
+      <li>Tecnologías, frameworks y estándares implementados</li>
+      <li>Requisitos de hardware y software para instalación</li>
+      <li>Modelado de datos y estructura de base de datos</li>
+      <li>Procedimientos detallados de instalación y configuración</li>
+      <li>Diagrama de componentes y módulos del sistema</li>
+    </ul>
+    
+    <div class="info-box">
+      <strong>📌 Nota:</strong> Este manual debe complementarse con el Manual de Usuario para capacitación de usuarios finales y el Plan de Mantenimiento para gestión operativa del sistema.
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section id="arquitectura">
+    <h2>🏗️ Arquitectura del Sistema</h2>
+    <p>El sistema implementa una <strong>Arquitectura en Capas (Layered Architecture)</strong> con separación clara de responsabilidades, siguiendo principios SOLID y patrones de diseño empresariales. Esta arquitectura facilita el mantenimiento, testing y escalabilidad del sistema.</p>
+    
+    <h3>Arquitectura en Capas (Layered Architecture)</h3>
+    
+    <div class="diagram">
+      <strong>Estructura de Capas del Sistema:</strong>
+      <pre>
+┌─────────────────────────────────────────────────────────┐
+│           CAPA DE PRESENTACIÓN (Frontend)               │
+│  Angular 17 + TypeScript + Angular Material + RxJS     │
+│  - Componentes visuales                                 │
+│  - Servicios HTTP                                       │
+│  - Guards de autenticación                              │
+│  - Interceptores                                        │
+└────────────────────┬────────────────────────────────────┘
+                     │ HTTP/REST API (JSON)
+                     ↓
+┌─────────────────────────────────────────────────────────┐
+│              CAPA DE CONTROLADORES                      │
+│  Spring Boot @RestController                            │
+│  - Endpoints REST API                                   │
+│  - Validación de requests                               │
+│  - Manejo de excepciones                                │
+│  - Documentación Swagger/OpenAPI                        │
+└────────────────────┬────────────────────────────────────┘
+                     │
+                     ↓
+┌─────────────────────────────────────────────────────────┐
+│           CAPA DE LÓGICA DE NEGOCIO                     │
+│  Spring @Service                                        │
+│  - Reglas de negocio                                    │
+│  - Validaciones complejas                               │
+│  - Cálculos (stock, precios, reportes)                  │
+│  - Orquestación de transacciones                        │
+└────────────────────┬────────────────────────────────────┘
+                     │
+                     ↓
+┌─────────────────────────────────────────────────────────┐
+│         CAPA DE ACCESO A DATOS (Repository)             │
+│  Spring Data JPA @Repository                            │
+│  - CRUD operations                                      │
+│  - Queries personalizadas                               │
+│  - Paginación y ordenamiento                            │
+│  - Especificaciones JPA                                 │
+└────────────────────┬────────────────────────────────────┘
+                     │ JDBC
+                     ↓
+┌─────────────────────────────────────────────────────────┐
+│              CAPA DE PERSISTENCIA                       │
+│  MySQL 8.0 - Base de Datos Relacional                  │
+│  - 25 tablas normalizadas                               │
+│  - Stored procedures                                    │
+│  - Triggers de auditoría                                │
+│  - Índices optimizados                                  │
+└─────────────────────────────────────────────────────────┘
+      </pre>
+    </div>
+    
+    <h3>Patrones de Diseño Implementados</h3>
+    <ul>
+      <li><strong>MVC (Model-View-Controller):</strong> Separación entre datos, lógica y presentación</li>
+      <li><strong>Repository Pattern:</strong> Abstracción del acceso a datos con Spring Data JPA</li>
+      <li><strong>Service Layer Pattern:</strong> Encapsulación de lógica de negocio</li>
+      <li><strong>DTO (Data Transfer Object):</strong> Transferencia de datos entre capas</li>
+      <li><strong>Dependency Injection:</strong> Inyección de dependencias con Spring IoC</li>
+      <li><strong>Singleton:</strong> Beans de Spring gestionados como singleton por defecto</li>
+      <li><strong>Observer Pattern:</strong> RxJS Observables en Angular para programación reactiva</li>
+    </ul>
+    
+    <h3>Características de la Arquitectura</h3>
+    <ul>
+      <li><strong>Separación de Responsabilidades:</strong> Cada capa tiene un propósito específico</li>
+      <li><strong>Bajo Acoplamiento:</strong> Comunicación a través de interfaces bien definidas</li>
+      <li><strong>Alta Cohesión:</strong> Componentes relacionados agrupados en la misma capa</li>
+      <li><strong>Testabilidad:</strong> Fácil creación de tests unitarios por capa</li>
+      <li><strong>Mantenibilidad:</strong> Cambios en una capa no afectan a las demás</li>
+      <li><strong>Reutilización:</strong> Servicios y repositorios reutilizables</li>
+    </ul>
+    
+    <div class="highlight-box">
+      <strong>⚡ Ventaja Clave:</strong> La arquitectura en capas permite que el frontend (Angular) y el backend (Spring Boot) se desarrollen, desplieguen y escalen de forma independiente, facilitando el trabajo en equipo y la evolución del sistema.
+    </div>
+  </section>
+
+  <!-- Prerequisites -->
+  <section id="prerrequisitos">
+    <h2>⚙️ Prerrequisitos de Instalación</h2>
+    <p>Para la instalación y ejecución del sistema se requieren los siguientes componentes de software y hardware:</p>
+    
+    <h3>Requisitos de Software</h3>
+    <table>
+      <tr>
+        <th>Componente</th>
+        <th>Versión Requerida</th>
+        <th>Propósito</th>
+      </tr>
+      <tr>
+        <td><strong>Java JDK</strong></td>
+        <td>17 o superior (LTS)</td>
+        <td>Ejecución del backend Spring Boot</td>
+      </tr>
+      <tr>
+        <td><strong>Node.js</strong></td>
+        <td>18.x o superior</td>
+        <td>Ejecución y build del frontend Angular</td>
+      </tr>
+      <tr>
+        <td><strong>npm</strong></td>
+        <td>9.x o superior</td>
+        <td>Gestor de paquetes JavaScript</td>
+      </tr>
+      <tr>
+        <td><strong>MySQL Server</strong></td>
+        <td>8.0 o superior</td>
+        <td>Base de datos relacional</td>
+      </tr>
+      <tr>
+        <td><strong>Maven</strong></td>
+        <td>3.8 o superior</td>
+        <td>Gestión de dependencias Java</td>
+      </tr>
+      <tr>
+        <td><strong>Git</strong></td>
+        <td>2.x o superior</td>
+        <td>Control de versiones</td>
+      </tr>
+      <tr>
+        <td><strong>Docker</strong> (opcional)</td>
+        <td>20.x o superior</td>
+        <td>Contenedorización y despliegue</td>
+      </tr>
+    </table>
+    
+    <h3>Requisitos de Hardware (Mínimos)</h3>
+    <table>
+      <tr>
+        <th>Recurso</th>
+        <th>Desarrollo</th>
+        <th>Producción</th>
+      </tr>
+      <tr>
+        <td><strong>CPU</strong></td>
+        <td>Dual-core 2.0 GHz</td>
+        <td>Quad-core 3.0 GHz</td>
+      </tr>
+      <tr>
+        <td><strong>RAM</strong></td>
+        <td>8 GB</td>
+        <td>16 GB o superior</td>
+      </tr>
+      <tr>
+        <td><strong>Disco</strong></td>
+        <td>10 GB libres (SSD recomendado)</td>
+        <td>100 GB libres (SSD)</td>
+      </tr>
+      <tr>
+        <td><strong>Red</strong></td>
+        <td>Conexión a Internet</td>
+        <td>Conexión estable 100 Mbps+</td>
+      </tr>
+    </table>
+    
+    <h3>IDEs Recomendados</h3>
+    <ul>
+      <li><strong>Backend (Java/Spring):</strong> IntelliJ IDEA Community/Ultimate, Eclipse, VS Code con extensiones Java</li>
+      <li><strong>Frontend (Angular):</strong> Visual Studio Code, WebStorm</li>
+      <li><strong>Base de Datos:</strong> MySQL Workbench, DBeaver, HeidiSQL</li>
+    </ul>
+    
+    <h3>Sistemas Operativos Compatibles</h3>
+    <ul>
+      <li>Windows 10/11 (64-bit)</li>
+      <li>macOS 11 (Big Sur) o superior</li>
+      <li>Linux (Ubuntu 20.04+, CentOS 8+, Debian 11+)</li>
+    </ul>
+    
+    <div class="info-box">
+      <strong>💡 Recomendación:</strong> Para entornos de producción, se recomienda desplegar el sistema en servidores Linux (Ubuntu Server 22.04 LTS) con Docker para facilitar la gestión de contenedores y escalabilidad horizontal.
+    </div>
+  </section>
+
+  <!-- Frameworks -->
+  <section id="frameworks">
+    <h2>🛠️ Frameworks y Estándares Tecnológicos</h2>
+    <p>El sistema está construido utilizando frameworks y tecnologías modernas ampliamente adoptadas en la industria:</p>
+    
+    <h3>Backend - Spring Boot Ecosystem</h3>
+    <table>
+      <tr>
+        <th>Framework/Librería</th>
+        <th>Versión</th>
+        <th>Propósito</th>
+      </tr>
+      <tr>
+        <td><strong>Spring Boot</strong></td>
+        <td>3.2.x</td>
+        <td>Framework base para aplicaciones Java empresariales</td>
+      </tr>
+      <tr>
+        <td><strong>Spring Web (MVC)</strong></td>
+        <td>6.1.x</td>
+        <td>Creación de REST APIs y controladores web</td>
+      </tr>
+      <tr>
+        <td><strong>Spring Data JPA</strong></td>
+        <td>3.2.x</td>
+        <td>Abstracción de acceso a datos con JPA/Hibernate</td>
+      </tr>
+      <tr>
+        <td><strong>Spring Security</strong></td>
+        <td>6.2.x</td>
+        <td>Autenticación y autorización con JWT</td>
+      </tr>
+      <tr>
+        <td><strong>Hibernate ORM</strong></td>
+        <td>6.4.x</td>
+        <td>Mapeo objeto-relacional (ORM)</td>
+      </tr>
+      <tr>
+        <td><strong>Lombok</strong></td>
+        <td>1.18.x</td>
+        <td>Reducción de código boilerplate (getters/setters)</td>
+      </tr>
+      <tr>
+        <td><strong>MapStruct</strong></td>
+        <td>1.5.x</td>
+        <td>Mapeo entre Entidades y DTOs</td>
+      </tr>
+      <tr>
+        <td><strong>Validation API</strong></td>
+        <td>3.0.x</td>
+        <td>Validación de beans con anotaciones</td>
+      </tr>
+      <tr>
+        <td><strong>Springdoc OpenAPI</strong></td>
+        <td>2.3.x</td>
+        <td>Documentación automática de API (Swagger UI)</td>
+      </tr>
+    </table>
+    
+    <h3>Frontend - Angular Ecosystem</h3>
+    <table>
+      <tr>
+        <th>Framework/Librería</th>
+        <th>Versión</th>
+        <th>Propósito</th>
+      </tr>
+      <tr>
+        <td><strong>Angular</strong></td>
+        <td>17.x</td>
+        <td>Framework SPA para aplicaciones web</td>
+      </tr>
+      <tr>
+        <td><strong>TypeScript</strong></td>
+        <td>5.2.x</td>
+        <td>Lenguaje tipado basado en JavaScript</td>
+      </tr>
+      <tr>
+        <td><strong>RxJS</strong></td>
+        <td>7.8.x</td>
+        <td>Programación reactiva con Observables</td>
+      </tr>
+      <tr>
+        <td><strong>Angular Material</strong></td>
+        <td>17.x</td>
+        <td>Componentes UI basados en Material Design</td>
+      </tr>
+      <tr>
+        <td><strong>Chart.js</strong></td>
+        <td>4.4.x</td>
+        <td>Gráficos y visualizaciones de datos</td>
+      </tr>
+      <tr>
+        <td><strong>Angular Forms</strong></td>
+        <td>17.x</td>
+        <td>Formularios reactivos con validaciones</td>
+      </tr>
+      <tr>
+        <td><strong>Angular Router</strong></td>
+        <td>17.x</td>
+        <td>Navegación SPA con guards</td>
+      </tr>
+    </table>
+    
+    <h3>Base de Datos</h3>
+    <table>
+      <tr>
+        <th>Tecnología</th>
+        <th>Versión</th>
+        <th>Características Utilizadas</th>
+      </tr>
+      <tr>
+        <td><strong>MySQL</strong></td>
+        <td>8.0</td>
+        <td>
+          • Transacciones ACID<br>
+          • Stored Procedures<br>
+          • Triggers para auditoría<br>
+          • Índices B-Tree y Full-Text<br>
+          • Foreign Keys con integridad referencial
+        </td>
+      </tr>
+    </table>
+    
+    <h3>Herramientas de Desarrollo y Deploy</h3>
+    <ul>
+      <li><strong>Maven:</strong> Gestión de dependencias y build del backend</li>
+      <li><strong>npm/Angular CLI:</strong> Gestión de paquetes y build del frontend</li>
+      <li><strong>Docker:</strong> Contenedorización de aplicaciones</li>
+      <li><strong>Docker Compose:</strong> Orquestación de contenedores (backend, frontend, MySQL)</li>
+      <li><strong>GitHub Actions:</strong> CI/CD para integración y despliegue continuo</li>
+      <li><strong>Nginx:</strong> Reverse proxy y servidor web para producción</li>
+    </ul>
+    
+    <h3>Estándares y Convenciones</h3>
+    <ul>
+      <li><strong>REST API:</strong> Arquitectura REST con verbos HTTP (GET, POST, PUT, DELETE)</li>
+      <li><strong>JSON:</strong> Formato de intercambio de datos</li>
+      <li><strong>JWT (JSON Web Tokens):</strong> Autenticación stateless</li>
+      <li><strong>OpenAPI 3.0:</strong> Especificación de API documentada</li>
+      <li><strong>Semantic Versioning:</strong> Versionado de releases (MAJOR.MINOR.PATCH)</li>
+      <li><strong>Git Flow:</strong> Estrategia de branching para control de versiones</li>
+    </ul>
+  </section>
+
+  <!-- Use Cases -->
+  <section id="casos-uso">
+    <h2>📊 Diagrama de Casos de Uso</h2>
+    <p>El sistema soporta cuatro tipos de actores con diferentes niveles de acceso y funcionalidades. Los casos de uso cubren la gestión completa de inventario multi-tienda, productos, proveedores y reportes analíticos.</p>
+    
+    <div class="image-placeholder">
+      <strong>Diagrama de Casos de Uso UML</strong><br>
+      [Actores: Admin Sistema, Gerente General, Admin Tienda, Vendedor]<br><br>
+      <strong>Casos de Uso Principales:</strong><br>
+      • Gestionar Usuarios y Roles<br>
+      • Gestionar Tiendas<br>
+      • Gestionar Productos y Categorías<br>
+      • Gestionar Proveedores<br>
+      • Controlar Inventario por Tienda<br>
+      • Registrar Movimientos (Entrada/Salida/Ajuste)<br>
+      • Transferir Stock entre Tiendas<br>
+      • Generar Reportes de Inventario<br>
+      • Consultar Stock en Tiempo Real<br>
+      • Configurar Alertas de Stock Mínimo
+    </div>
+    
+    <h3>Descripción de Actores</h3>
+    <table>
+      <tr>
+        <th>Actor</th>
+        <th>Descripción</th>
+        <th>Permisos Principales</th>
+      </tr>
+      <tr>
+        <td><strong>Admin Sistema</strong></td>
+        <td>Administrador con acceso total al sistema</td>
+        <td>
+          • Gestión de usuarios y roles<br>
+          • Configuración de tiendas<br>
+          • Acceso a todos los módulos<br>
+          • Auditoría del sistema
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Gerente General</strong></td>
+        <td>Supervisor con vista consolidada de todas las tiendas</td>
+        <td>
+          • Dashboard ejecutivo<br>
+          • Reportes consolidados<br>
+          • Análisis de inventario<br>
+          • Vista de todas las tiendas
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Admin Tienda</strong></td>
+        <td>Administrador de un punto de venta específico</td>
+        <td>
+          • Gestión completa de su tienda<br>
+          • Control de inventario local<br>
+          • Registro de movimientos<br>
+          • Reportes de su tienda
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Vendedor</strong></td>
+        <td>Usuario operativo con permisos limitados</td>
+        <td>
+          • Consulta de stock<br>
+          • Registro de salidas<br>
+          • Vista de productos<br>
+          • Consultas básicas
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Entity-Relationship Model -->
+  <section id="modelo-er">
+    <h2>🗂️ Modelo Entidad-Relación (DER)</h2>
+    <p>El modelo de base de datos implementa un diseño normalizado en <strong>Tercera Forma Normal (3NF)</strong> que garantiza la integridad referencial y minimiza la redundancia de datos. El esquema consta de 25 tablas principales organizadas en módulos funcionales.</p>
+    
+    <div class="image-placeholder">
+      <strong>Diagrama Entidad-Relación</strong><br><br>
+      <strong>Entidades Principales:</strong><br>
+      • users (Usuarios del sistema)<br>
+      • roles (Roles y permisos)<br>
+      • stores (Tiendas/Puntos de venta)<br>
+      • categories (Categorías de productos)<br>
+      • suppliers (Proveedores)<br>
+      • products (Productos del catálogo)<br>
+      • inventory (Stock por producto y tienda)<br>
+      • inventory_movements (Movimientos de inventario)<br>
+      • transfers (Transferencias entre tiendas)<br>
+      • audit_logs (Registro de auditoría)
+    </div>
+    
+    <h3>Relaciones Principales</h3>
+    <div class="diagram">
+      <pre>
+users (1) ───── (N) inventory_movements
+users (N) ───── (N) roles [users_roles]
+stores (1) ───── (N) inventory
+stores (1) ───── (N) transfers [origen]
+stores (1) ───── (N) transfers [destino]
+categories (1) ───── (N) products
+suppliers (1) ───── (N) products
+products (1) ───── (N) inventory
+products (1) ───── (N) inventory_movements
+products (1) ───── (N) transfers
+      </pre>
+    </div>
+    
+    <h3>Características del Modelo</h3>
+    <ul>
+      <li><strong>Integridad Referencial:</strong> Foreign Keys con CASCADE/RESTRICT según reglas de negocio</li>
+      <li><strong>Auditoría:</strong> Campos created_at, updated_at, created_by en todas las tablas</li>
+      <li><strong>Soft Delete:</strong> Campo deleted_at para eliminación lógica</li>
+      <li><strong>Índices:</strong> Índices compuestos en campos de búsqueda frecuente</li>
+      <li><strong>Constraints:</strong> CHECK constraints para validaciones a nivel de BD</li>
+      <li><strong>Triggers:</strong> Actualización automática de stock en movimientos</li>
+    </ul>
+  </section>
+
+  <!-- Data Dictionary -->
+  <section id="diccionario">
+    <h2>📖 Diccionario de Datos</h2>
+    <p>Especificación detallada de cada tabla, campo, tipo de dato y restricciones del modelo de base de datos.</p>
+    
+    <h3>Tabla: users</h3>
+    <table>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Restricciones</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>id</strong></td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>PK, AUTO_INCREMENT</td>
+        <td>Identificador único del usuario</td>
+      </tr>
+      <tr>
+        <td>username</td>
+        <td>VARCHAR</td>
+        <td>50</td>
+        <td>NOT NULL, UNIQUE</td>
+        <td>Nombre de usuario para login</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>VARCHAR</td>
+        <td>100</td>
+        <td>NOT NULL, UNIQUE</td>
+        <td>Correo electrónico</td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td>VARCHAR</td>
+        <td>255</td>
+        <td>NOT NULL</td>
+        <td>Contraseña encriptada (BCrypt)</td>
+      </tr>
+      <tr>
+        <td>first_name</td>
+        <td>VARCHAR</td>
+        <td>100</td>
+        <td>NOT NULL</td>
+        <td>Nombre(s)</td>
+      </tr>
+      <tr>
+        <td>last_name</td>
+        <td>VARCHAR</td>
+        <td>100</td>
+        <td>NOT NULL</td>
+        <td>Apellido(s)</td>
+      </tr>
+      <tr>
+        <td>store_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → stores(id)</td>
+        <td>Tienda asignada al usuario</td>
+      </tr>
+      <tr>
+        <td>active</td>
+        <td>BOOLEAN</td>
+        <td>-</td>
+        <td>DEFAULT TRUE</td>
+        <td>Estado activo/inactivo</td>
+      </tr>
+      <tr>
+        <td>created_at</td>
+        <td>TIMESTAMP</td>
+        <td>-</td>
+        <td>DEFAULT CURRENT_TIMESTAMP</td>
+        <td>Fecha de creación</td>
+      </tr>
+      <tr>
+        <td>updated_at</td>
+        <td>TIMESTAMP</td>
+        <td>-</td>
+        <td>ON UPDATE CURRENT_TIMESTAMP</td>
+        <td>Fecha de última actualización</td>
+      </tr>
+    </table>
+    
+    <h3>Tabla: stores</h3>
+    <table>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Restricciones</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>id</strong></td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>PK, AUTO_INCREMENT</td>
+        <td>Identificador único de la tienda</td>
+      </tr>
+      <tr>
+        <td>code</td>
+        <td>VARCHAR</td>
+        <td>20</td>
+        <td>NOT NULL, UNIQUE</td>
+        <td>Código interno de la tienda</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>VARCHAR</td>
+        <td>150</td>
+        <td>NOT NULL</td>
+        <td>Nombre de la tienda</td>
+      </tr>
+      <tr>
+        <td>address</td>
+        <td>VARCHAR</td>
+        <td>255</td>
+        <td>NOT NULL</td>
+        <td>Dirección física</td>
+      </tr>
+      <tr>
+        <td>city</td>
+        <td>VARCHAR</td>
+        <td>100</td>
+        <td>NOT NULL</td>
+        <td>Ciudad</td>
+      </tr>
+      <tr>
+        <td>phone</td>
+        <td>VARCHAR</td>
+        <td>20</td>
+        <td>-</td>
+        <td>Teléfono de contacto</td>
+      </tr>
+      <tr>
+        <td>active</td>
+        <td>BOOLEAN</td>
+        <td>-</td>
+        <td>DEFAULT TRUE</td>
+        <td>Estado activo/inactivo</td>
+      </tr>
+      <tr>
+        <td>created_at</td>
+        <td>TIMESTAMP</td>
+        <td>-</td>
+        <td>DEFAULT CURRENT_TIMESTAMP</td>
+        <td>Fecha de creación</td>
+      </tr>
+    </table>
+    
+    <h3>Tabla: products</h3>
+    <table>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Restricciones</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>id</strong></td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>PK, AUTO_INCREMENT</td>
+        <td>Identificador único del producto</td>
+      </tr>
+      <tr>
+        <td>sku</td>
+        <td>VARCHAR</td>
+        <td>50</td>
+        <td>NOT NULL, UNIQUE</td>
+        <td>Código SKU del producto</td>
+      </tr>
+      <tr>
+        <td>barcode</td>
+        <td>VARCHAR</td>
+        <td>50</td>
+        <td>UNIQUE</td>
+        <td>Código de barras</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>VARCHAR</td>
+        <td>200</td>
+        <td>NOT NULL</td>
+        <td>Nombre del producto</td>
+      </tr>
+      <tr>
+        <td>description</td>
+        <td>TEXT</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Descripción detallada</td>
+      </tr>
+      <tr>
+        <td>category_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → categories(id), NOT NULL</td>
+        <td>Categoría del producto</td>
+      </tr>
+      <tr>
+        <td>supplier_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → suppliers(id)</td>
+        <td>Proveedor principal</td>
+      </tr>
+      <tr>
+        <td>unit_price</td>
+        <td>DECIMAL</td>
+        <td>10,2</td>
+        <td>NOT NULL, CHECK (unit_price >= 0)</td>
+        <td>Precio unitario de venta</td>
+      </tr>
+      <tr>
+        <td>cost_price</td>
+        <td>DECIMAL</td>
+        <td>10,2</td>
+        <td>CHECK (cost_price >= 0)</td>
+        <td>Precio de costo</td>
+      </tr>
+      <tr>
+        <td>image_url</td>
+        <td>VARCHAR</td>
+        <td>255</td>
+        <td>-</td>
+        <td>URL de la imagen del producto</td>
+      </tr>
+      <tr>
+        <td>active</td>
+        <td>BOOLEAN</td>
+        <td>-</td>
+        <td>DEFAULT TRUE</td>
+        <td>Producto activo/inactivo</td>
+      </tr>
+    </table>
+    
+    <h3>Tabla: inventory</h3>
+    <table>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Restricciones</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>id</strong></td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>PK, AUTO_INCREMENT</td>
+        <td>Identificador único</td>
+      </tr>
+      <tr>
+        <td>product_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → products(id), NOT NULL</td>
+        <td>Producto en inventario</td>
+      </tr>
+      <tr>
+        <td>store_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → stores(id), NOT NULL</td>
+        <td>Tienda del inventario</td>
+      </tr>
+      <tr>
+        <td>quantity</td>
+        <td>INT</td>
+        <td>-</td>
+        <td>NOT NULL, DEFAULT 0, CHECK (quantity >= 0)</td>
+        <td>Cantidad en stock</td>
+      </tr>
+      <tr>
+        <td>min_stock</td>
+        <td>INT</td>
+        <td>-</td>
+        <td>DEFAULT 0</td>
+        <td>Stock mínimo (alerta)</td>
+      </tr>
+      <tr>
+        <td>max_stock</td>
+        <td>INT</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Stock máximo</td>
+      </tr>
+      <tr>
+        <td>updated_at</td>
+        <td>TIMESTAMP</td>
+        <td>-</td>
+        <td>ON UPDATE CURRENT_TIMESTAMP</td>
+        <td>Última actualización de stock</td>
+      </tr>
+      <tr>
+        <td colspan="5"><strong>UNIQUE KEY:</strong> (product_id, store_id)</td>
+      </tr>
+    </table>
+    
+    <h3>Tabla: inventory_movements</h3>
+    <table>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Restricciones</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td><strong>id</strong></td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>PK, AUTO_INCREMENT</td>
+        <td>Identificador único del movimiento</td>
+      </tr>
+      <tr>
+        <td>product_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → products(id), NOT NULL</td>
+        <td>Producto afectado</td>
+      </tr>
+      <tr>
+        <td>store_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → stores(id), NOT NULL</td>
+        <td>Tienda del movimiento</td>
+      </tr>
+      <tr>
+        <td>movement_type</td>
+        <td>ENUM</td>
+        <td>-</td>
+        <td>('ENTRADA', 'SALIDA', 'AJUSTE')</td>
+        <td>Tipo de movimiento</td>
+      </tr>
+      <tr>
+        <td>quantity</td>
+        <td>INT</td>
+        <td>-</td>
+        <td>NOT NULL, CHECK (quantity > 0)</td>
+        <td>Cantidad del movimiento</td>
+      </tr>
+      <tr>
+        <td>reason</td>
+        <td>VARCHAR</td>
+        <td>255</td>
+        <td>NOT NULL</td>
+        <td>Motivo del movimiento</td>
+      </tr>
+      <tr>
+        <td>user_id</td>
+        <td>BIGINT</td>
+        <td>-</td>
+        <td>FK → users(id), NOT NULL</td>
+        <td>Usuario que registra el movimiento</td>
+      </tr>
+      <tr>
+        <td>created_at</td>
+        <td>TIMESTAMP</td>
+        <td>-</td>
+        <td>DEFAULT CURRENT_TIMESTAMP</td>
+        <td>Fecha y hora del movimiento</td>
+      </tr>
+    </table>
+    
+    <div class="info-box">
+      <strong>📌 Nota sobre Normalización:</strong> El modelo está en 3NF, eliminando dependencias transitivas y garantizando que cada atributo dependa únicamente de la clave primaria. Esto reduce redundancia y facilita el mantenimiento de la integridad de datos.
+    </div>
+  </section>
+
+  <!-- Components Diagram -->
+  <section id="componentes">
+    <h2>🧩 Diagrama de Componentes</h2>
+    <p>El sistema está organizado en módulos funcionales que encapsulan responsabilidades específicas y se comunican a través de interfaces bien definidas.</p>
+    
+    <div class="diagram">
+      <strong>Arquitectura de Componentes:</strong>
+      <pre>
+┌─────────────────────────────────────────────────────────────┐
+│                  FRONTEND (Angular 17)                       │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Auth      │  │  Dashboard  │  │  Inventory  │        │
+│  │   Module    │  │   Module    │  │   Module    │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │  Products   │  │  Suppliers  │  │   Reports   │        │
+│  │   Module    │  │   Module    │  │   Module    │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│                                                              │
+│  ┌──────────────────────────────────────────────┐          │
+│  │         Core Module (Servicios Globales)      │          │
+│  │  • AuthService  • HttpInterceptor             │          │
+│  │  • AuthGuard    • ErrorHandler                │          │
+│  └──────────────────────────────────────────────┘          │
+└─────────────────────────────────────────────────────────────┘
+                            ↓ HTTP/REST (JSON)
+┌─────────────────────────────────────────────────────────────┐
+│              BACKEND (Spring Boot 3.2)                       │
+├─────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────┐          │
+│  │         Security Module                       │          │
+│  │  • JWT Authentication  • Authorization        │          │
+│  └──────────────────────────────────────────────┘          │
+│                                                              │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   User      │  │  Inventory  │  │  Product    │        │
+│  │  Controller │  │ Controller  │  │ Controller  │        │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘        │
+│         │                 │                 │               │
+│  ┌──────┴──────┐  ┌──────┴──────┐  ┌──────┴──────┐        │
+│  │   User      │  │  Inventory  │  │  Product    │        │
+│  │   Service   │  │   Service   │  │   Service   │        │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘        │
+│         │                 │                 │               │
+│  ┌──────┴──────┐  ┌──────┴──────┐  ┌──────┴──────┐        │
+│  │   User      │  │  Inventory  │  │  Product    │        │
+│  │ Repository  │  │ Repository  │  │ Repository  │        │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘        │
+│         │                 │                 │               │
+│         └─────────────────┴─────────────────┘               │
+│                           │                                  │
+└───────────────────────────┼──────────────────────────────────┘
+                            ↓ JDBC
+┌─────────────────────────────────────────────────────────────┐
+│                    MySQL Database 8.0                        │
+│  • 25 tablas normalizadas  • Stored Procedures              │
+│  • Triggers de auditoría   • Índices optimizados            │
+└─────────────────────────────────────────────────────────────┘
+      </pre>
+    </div>
+    
+    <h3>Módulos del Backend (Spring Boot)</h3>
+    <table>
+      <tr>
+        <th>Módulo</th>
+        <th>Paquete</th>
+        <th>Responsabilidad</th>
+      </tr>
+      <tr>
+        <td><strong>Security</strong></td>
+        <td>com.inventory.security</td>
+        <td>Autenticación JWT, filtros, configuración de seguridad</td>
+      </tr>
+      <tr>
+        <td><strong>User</strong></td>
+        <td>com.inventory.user</td>
+        <td>Gestión de usuarios, roles y permisos</td>
+      </tr>
+      <tr>
+        <td><strong>Store</strong></td>
+        <td>com.inventory.store</td>
+        <td>Administración de tiendas/puntos de venta</td>
+      </tr>
+      <tr>
+        <td><strong>Product</strong></td>
+        <td>com.inventory.product</td>
+        <td>Catálogo de productos, categorías, proveedores</td>
+      </tr>
+      <tr>
+        <td><strong>Inventory</strong></td>
+        <td>com.inventory.inventory</td>
+        <td>Control de stock, movimientos, transferencias</td>
+      </tr>
+      <tr>
+        <td><strong>Report</strong></td>
+        <td>com.inventory.report</td>
+        <td>Generación de reportes y estadísticas</td>
+      </tr>
+      <tr>
+        <td><strong>Common</strong></td>
+        <td>com.inventory.common</td>
+        <td>DTOs, excepciones, utilidades compartidas</td>
+      </tr>
+    </table>
+    
+    <h3>Módulos del Frontend (Angular)</h3>
+    <table>
+      <tr>
+        <th>Módulo</th>
+        <th>Ruta</th>
+        <th>Componentes Principales</th>
+      </tr>
+      <tr>
+        <td><strong>Auth Module</strong></td>
+        <td>/auth</td>
+        <td>LoginComponent, RegisterComponent</td>
+      </tr>
+      <tr>
+        <td><strong>Dashboard Module</strong></td>
+        <td>/dashboard</td>
+        <td>DashboardComponent, WidgetsComponent</td>
+      </tr>
+      <tr>
+        <td><strong>Inventory Module</strong></td>
+        <td>/inventory</td>
+        <td>InventoryListComponent, MovementsComponent, TransfersComponent</td>
+      </tr>
+      <tr>
+        <td><strong>Products Module</strong></td>
+        <td>/products</td>
+        <td>ProductListComponent, ProductFormComponent, CategoriesComponent</td>
+      </tr>
+      <tr>
+        <td><strong>Reports Module</strong></td>
+        <td>/reports</td>
+        <td>ReportsComponent, ChartsComponent</td>
+      </tr>
+      <tr>
+        <td><strong>Core Module</strong></td>
+        <td>-</td>
+        <td>AuthService, HttpInterceptor, AuthGuard</td>
+      </tr>
+      <tr>
+        <td><strong>Shared Module</strong></td>
+        <td>-</td>
+        <td>HeaderComponent, SidebarComponent, DirectivesComponent</td>
+      </tr>
+    </table>
+  </section>
+
+ <!-- Installation -->
+  <section id="instalacion">
+    <h2>🚀 Scripts de Instalación y Ejecución</h2>
+    <p>Procedimiento completo para la instalación del sistema en ambiente de desarrollo y producción.</p>
+    
+    <h3>1. Clonar el Repositorio</h3>
+    <pre><code># Clonar el repositorio principal
+git clone https://github.com/joseluis1061/GA10-220501097-AA10-EV01.git
+cd InventarioMultiTienda
+
+# La estructura del proyecto:
+# InventarioMultiTienda/
+# ├── backend/        (Spring Boot)
+# ├── frontend/       (Angular)
+# └── docker-compose.yml</code></pre>
+    
+    <h3>2. Configuración de Base de Datos</h3>
+    <pre><code># Iniciar MySQL (si usa Docker)
+docker run --name mysql-inventory \
+  -e MYSQL_ROOT_PASSWORD=root123 \
+  -e MYSQL_DATABASE=inventory_db \
+  -p 3306:3306 \
+  -d mysql:8.0
+
+# O instalar MySQL localmente y crear la base de datos
+mysql -u root -p
+CREATE DATABASE inventory_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'inventory_user'@'localhost' IDENTIFIED BY 'inventory_pass';
+GRANT ALL PRIVILEGES ON inventory_db.* TO 'inventory_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+    
+    <h3>3. Instalación del Backend (Spring Boot)</h3>
+    <pre><code># Navegar al directorio backend
+cd backend
+
+# Configurar application.properties
+# Editar src/main/resources/application.properties:
+spring.datasource.url=jdbc:mysql://localhost:3306/inventory_db
+spring.datasource.username=inventory_user
+spring.datasource.password=inventory_pass
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# JWT Secret (cambiar en producción)
+jwt.secret=MiClaveSecretaSuperSeguraParaJWT2025
+jwt.expiration=86400000
+
+# Compilar el proyecto con Maven
+mvn clean install
+
+# Ejecutar el backend
+mvn spring-boot:run
+
+# El backend estará disponible en: http://localhost:8080
+# Swagger UI: http://localhost:8080/swagger-ui.html</code></pre>
+    
+    <h3>4. Instalación del Frontend (Angular)</h3>
+    <pre><code># Navegar al directorio frontend
+cd ../frontend
+
+# Instalar dependencias de Node
+npm install
+
+# Configurar la URL del API
+# Editar src/environments/environment.ts:
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api'
+};
+
+# Ejecutar el servidor de desarrollo
+ng serve
+
+# O para abrir automáticamente el navegador
+ng serve --open
+
+# El frontend estará disponible en: http://localhost:4200</code></pre>
+    
+    <h3>5. Inicialización de Datos</h3>
+    <pre><code># El sistema incluye scripts SQL de inicialización
+# ubicados en backend/src/main/resources/db/
+
+# Ejecutar scripts de datos iniciales (opcional)
+mysql -u inventory_user -p inventory_db < backend/src/main/resources/db/init-data.sql
+
+# O usar la interfaz web para crear:
+# - Usuario administrador inicial
+# - Tiendas
+# - Categorías básicas
+# - Productos de ejemplo</code></pre>
+    
+    <h3>6. Despliegue con Docker (Producción)</h3>
+    <pre><code># Desde el directorio raíz del proyecto
+docker-compose up -d
+
+# El docker-compose.yml incluye:
+# - MySQL 8.0
+# - Backend Spring Boot
+# - Frontend Angular (build de producción)
+# - Nginx como reverse proxy
+
+# Verificar que los contenedores están corriendo
+docker-compose ps
+
+# Ver logs
+docker-compose logs -f
+
+# Detener los servicios
+docker-compose down</code></pre>
+    
+    <h3>7. Build de Producción</h3>
+    <pre><code># Backend: Crear JAR ejecutable
+cd backend
+mvn clean package -DskipTests
+# JAR generado en: target/inventory-system-1.0.0.jar
+
+# Frontend: Build optimizado
+cd ../frontend
+npm run build:prod
+# Archivos generados en: dist/inventory-frontend/
+
+# Ejecutar JAR en producción
+java -jar target/inventory-system-1.0.0.jar
+
+# Servir frontend con Nginx
+# Copiar dist/ a /var/www/html/inventory
+# Configurar nginx.conf para reverse proxy al backend</code></pre>
+    
+    <h3>8. Variables de Entorno (Producción)</h3>
+    <pre><code># Crear archivo .env para el backend
+DATABASE_URL=jdbc:mysql://mysql-server:3306/inventory_db
+DATABASE_USERNAME=prod_user
+DATABASE_PASSWORD=SecurePassword123!
+JWT_SECRET=SuperSecretKeyForProduction2025!
+JWT_EXPIRATION=86400000
+SERVER_PORT=8080
+SPRING_PROFILES_ACTIVE=prod
+
+# Exportar variables de entorno
+export $(cat .env | xargs)
+
+# O usar secrets en Docker/Kubernetes</code></pre>
+    
+    <h3>9. Verificación de Instalación</h3>
+    <div class="info-box">
+      <strong>Checklist de Verificación:</strong>
+      <ul>
+        <li>✅ MySQL corriendo en puerto 3306</li>
+        <li>✅ Backend accesible en http://localhost:8080</li>
+        <li>✅ Swagger UI visible en http://localhost:8080/swagger-ui.html</li>
+        <li>✅ Frontend accesible en http://localhost:4200</li>
+        <li>✅ Login funcional con usuario de prueba</li>
+        <li>✅ Dashboard carga sin errores</li>
+        <li>✅ Consulta de inventario muestra datos</li>
+      </ul>
+    </div>
+    
+    <h3>10. Solución de Problemas Comunes</h3>
+    <table>
+      <tr>
+        <th>Problema</th>
+        <th>Causa</th>
+        <th>Solución</th>
+      </tr>
+      <tr>
+        <td>Error de conexión a MySQL</td>
+        <td>MySQL no está corriendo o credenciales incorrectas</td>
+        <td>Verificar servicio MySQL y configuración en application.properties</td>
+      </tr>
+      <tr>
+        <td>Puerto 8080 ya en uso</td>
+        <td>Otra aplicación usando el puerto</td>
+        <td>Cambiar puerto en application.properties: server.port=8081</td>
+      </tr>
+      <tr>
+        <td>CORS error en frontend</td>
+        <td>Backend no permite peticiones desde localhost:4200</td>
+        <td>Verificar @CrossOrigin en controllers o configuración CORS global</td>
+      </tr>
+      <tr>
+        <td>npm install falla</td>
+        <td>Versión incompatible de Node</td>
+        <td>Instalar Node.js 18.x o superior</td>
+      </tr>
+      <tr>
+        <td>Error al compilar con Maven</td>
+        <td>Java JDK no instalado o versión incorrecta</td>
+        <td>Instalar Java JDK 17 y configurar JAVA_HOME</td>
+      </tr>
+    </table>
+    
+    <div class="highlight-box">
+      <strong>💡 Tip:</strong> Para desarrollo, se recomienda usar Docker Compose que automatiza la configuración de todos los servicios. Para producción, considere usar un servicio de hosting como AWS, Azure o Google Cloud Platform con orquestación de contenedores.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h3>📞 Soporte y Contacto</h3>
+    <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
+    <p>&copy; 2025 Sistema de Inventario Multi-Tienda | Manual Técnico v1.0.0</p>
+    <p><em>Documentación técnica generada para la evidencia GA10-220501097-AA10-EV01</em></p>
+    <p style="margin-top: 20px; font-size: 0.9em;">
+      Este manual es parte del proceso de formación del programa ADSO y documenta las especificaciones técnicas, arquitectura y procedimientos de instalación del sistema empresarial de gestión de inventario para múltiples puntos de venta.
+    </p>
+  </footer>
+</body>
+</html>
